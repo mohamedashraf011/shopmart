@@ -2,6 +2,7 @@
 
 import { Iproduct } from "@/app/interface/product";
 import Link from "next/link";
+import AddToCartButton from "../AddToCartButton";
 
 export default function CategoryProductCard({ product }: { product: Iproduct }) {
   const truncateTitle = (title: string, wordsCount = 3) => {
@@ -60,17 +61,13 @@ export default function CategoryProductCard({ product }: { product: Iproduct }) 
 
         {/* Actions */}
         <div className="flex items-center gap-3 p-4">
-          <button
-            className="
-              flex-1 bg-black text-white
-              py-3 rounded-full
-              flex items-center justify-center gap-2
-              hover:bg-gray-900 transition cursor-pointer
-            "
+          <AddToCartButton 
+            productId={product._id}
+            className="flex-1 bg-black text-white py-3 rounded-full flex items-center justify-center gap-2 hover:bg-gray-900 transition cursor-pointer"
           >
             <i className="fas fa-shopping-cart"></i>
             Add To Cart
-          </button>
+          </AddToCartButton>
 
           <button className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition cursor-pointer">
             <i className="far fa-heart text-lg"></i>
