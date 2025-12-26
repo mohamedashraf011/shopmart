@@ -82,7 +82,7 @@ export default function AddressesPage() {
                 <h1 className="text-3xl font-bold">My Addresses</h1>
                 <button
                     onClick={() => setShowAddForm(!showAddForm)}
-                    className="bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 transition flex items-center gap-2"
+                    className="bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 transition flex items-center gap-2 cursor-pointer"
                 >
                     <i className="fas fa-plus"></i>
                     Add New Address
@@ -161,7 +161,7 @@ export default function AddressesPage() {
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition disabled:opacity-50"
+                                className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition disabled:opacity-50 cursor-pointer"
                             >
                                 {isSubmitting ? 'Adding...' : 'Add Address'}
                             </button>
@@ -169,7 +169,7 @@ export default function AddressesPage() {
                             <button
                                 type="button"
                                 onClick={() => setShowAddForm(false)}
-                                className="border border-gray-300 text-gray-700 px-6 py-2 rounded-full hover:bg-gray-50 transition"
+                                className="border border-gray-300 text-gray-700 px-6 py-2 rounded-full hover:bg-gray-50 transition cursor-pointer"
                             >
                                 Cancel
                             </button>
@@ -207,7 +207,7 @@ export default function AddressesPage() {
                         addresses.map((address) => (
                             <div key={address._id} className="bg-white rounded-lg shadow-md p-6">
                                 <div className="flex justify-between items-start">
-                                    <div className="flex-grow">
+                                    <div className="grow">
                                         <div className="flex items-center gap-2 mb-2">
                                             <i className="fas fa-map-marker-alt text-blue-600"></i>
                                             <h3 className="text-lg font-semibold">{address.name}</h3>
@@ -229,7 +229,7 @@ export default function AddressesPage() {
                                     
                                     <button
                                         onClick={() => handleDelete(address._id)}
-                                        className="text-red-500 hover:text-red-700 transition p-2"
+                                        className="text-red-500 hover:text-red-700 transition p-2 cursor-pointer"
                                         title="Delete Address"
                                     >
                                         <i className="fas fa-trash"></i>
