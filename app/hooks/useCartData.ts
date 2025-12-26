@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { getCart } from '../../API/getCart';
+import { updateCartItem } from '../../API/updateCartItem';
+import { removeFromCart } from '../../API/removeFromCart';
+import { toast } from 'sonner';
 
 interface CartItem {
     _id: string;
@@ -66,11 +69,66 @@ export function useCartData() {
         }
     }, [session?.accessToken]);
 
+    const updateItemCount = async (productId: string, newCount: number) => {
+        if (!session?.accessToken) {
+            setError('Please login first');
+            return false;
+        }
+
+        if (newCount < 1) {
+            toast.error('Quantity cannot be less than 1');
+            return false;
+        }
+
+        try {
+            const result = await updateCartItem(productId, newCount, session.accessToken as string);
+            
+            if (result.status === 'success') {
+                setCartData(result.data);
+                toast.success('Cart updated successfully');
+                return true;
+            } else {
+                toast.error('Failed to update cart');
+                return false;
+            }
+        } catch (err) {
+            toast.error('Error updating cart');
+            console.error('Cart update error:', err);
+            return false;
+        }
+    };
+
+    const removeItem = async (productId: string) => {
+        if (!session?.accessToken) {
+            setError('Please login first');
+            return false;
+        }
+
+        try {
+            const result = await removeFromCart(productId, session.accessToken as string);
+            
+            if (result.status === 'success') {
+                setCartData(result.data);
+                toast.success('Item removed from cart');
+                return true;
+            } else {
+                toast.error('Failed to remove item from cart');
+                return false;
+            }
+        } catch (err) {
+            toast.error('Error removing item from cart');
+            console.error('Cart remove error:', err);
+            return false;
+        }
+    };
+
     return {
         cartData,
         isLoading,
         error,
         refetch: fetchCart,
+        updateItemCount,
+        removeItem,
         clearError: () => setError(null)
     };
 }
