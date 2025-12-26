@@ -141,7 +141,7 @@ export default function OrdersPage() {
                             <div className="space-y-4">
                                 {order.cartItems.map((item) => (
                                     <div key={item._id} className="flex items-center gap-4">
-                                        <div className="relative w-16 h-16 flex-shrink-0">
+                                        <div className="relative w-16 h-16 shrink-0">
                                             <Image
                                                 src={item.product.imageCover}
                                                 alt={item.product.title}
@@ -150,7 +150,7 @@ export default function OrdersPage() {
                                             />
                                         </div>
                                         
-                                        <div className="flex-grow">
+                                        <div className="grow">
                                             <h4 className="font-semibold text-sm">
                                                 {item.product.title}
                                             </h4>
