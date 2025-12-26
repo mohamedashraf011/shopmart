@@ -9,7 +9,7 @@ import Image from 'next/image';
 export default function CartPage() {
     const { data: session } = useSession();
     const router = useRouter();
-    const { cartData, isLoading, error, updateItemCount, removeItem } = useCartData();
+    const { cartData, isLoading, error, updateItemCount, removeItem, clearAllItems } = useCartData();
 
     if (!session) {
         return (
@@ -71,12 +71,21 @@ export default function CartPage() {
         );
     }
 
-    // Calculate total items count (sum of all quantities)
+
     const totalItemsCount = cartData.products.reduce((total, item) => total + item.count, 0);
 
     return (
         <div className="container w-[90%] mx-auto py-10">
-            <h1 className="text-3xl font-bold text-center mb-10">Shopping Cart</h1>
+            <div className="flex justify-between items-center mb-10">
+                <h1 className="text-3xl font-bold">Shopping Cart</h1>
+                <button 
+                    onClick={clearAllItems}
+                    className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition flex items-center gap-2 cursor-pointer"
+                >
+                    <i className="fas fa-trash"></i>
+                    Clear Cart
+                </button>
+            </div>
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Cart Items */}
