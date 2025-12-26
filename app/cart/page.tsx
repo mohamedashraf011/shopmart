@@ -9,7 +9,7 @@ import Image from 'next/image';
 export default function CartPage() {
     const { data: session } = useSession();
     const router = useRouter();
-    const { cartData, isLoading, error } = useCartData();
+    const { cartData, isLoading, error, updateItemCount, removeItem } = useCartData();
 
     if (!session) {
         return (
@@ -71,6 +71,9 @@ export default function CartPage() {
         );
     }
 
+    // Calculate total items count (sum of all quantities)
+    const totalItemsCount = cartData.products.reduce((total, item) => total + item.count, 0);
+
     return (
         <div className="container w-[90%] mx-auto py-10">
             <h1 className="text-3xl font-bold text-center mb-10">Shopping Cart</h1>
@@ -81,7 +84,7 @@ export default function CartPage() {
                     <div className="space-y-4">
                         {cartData.products.map((item) => (
                             <div key={item._id} className="bg-white rounded-lg shadow-md p-6 flex items-center gap-4">
-                                <div className="relative w-20 h-20 flex-shrink-0">
+                                <div className="relative w-20 h-20 shrink-0">
                                     <Image
                                         src={item.product.imageCover}
                                         alt={item.product.title}
@@ -90,7 +93,7 @@ export default function CartPage() {
                                     />
                                 </div>
                                 
-                                <div className="flex-grow">
+                                <div className="grow">
                                     <h3 className="font-semibold text-lg mb-1">
                                         {item.product.title}
                                     </h3>
@@ -104,18 +107,28 @@ export default function CartPage() {
                                 
                                 <div className="flex items-center gap-3">
                                     <div className="flex items-center gap-2 bg-gray-100 rounded-full px-3 py-1">
-                                        <button className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center hover:bg-gray-50">
+                                        <button 
+                                            onClick={() => updateItemCount(item.product._id, item.count - 1)}
+                                            className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center hover:bg-gray-50 disabled:opacity-50 cursor-pointer"
+                                            disabled={item.count <= 1}
+                                        >
                                             <i className="fas fa-minus text-sm"></i>
                                         </button>
-                                        <span className="font-semibold min-w-[20px] text-center">
+                                        <span className="font-semibold min-w-[20] text-center">
                                             {item.count}
                                         </span>
-                                        <button className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center hover:bg-gray-50">
+                                        <button 
+                                            onClick={() => updateItemCount(item.product._id, item.count + 1)}
+                                            className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center hover:bg-gray-50 cursor-pointer"
+                                        >
                                             <i className="fas fa-plus text-sm"></i>
                                         </button>
                                     </div>
                                     
-                                    <button className="w-10 h-10 rounded-full bg-red-50 text-red-500 hover:bg-red-100 flex items-center justify-center">
+                                    <button 
+                                        onClick={() => removeItem(item.product._id)}
+                                        className="w-10 h-10 rounded-full bg-red-50 text-red-500 hover:bg-red-100 flex items-center justify-center cursor-pointer"
+                                    >
                                         <i className="fas fa-trash text-sm"></i>
                                     </button>
                                 </div>
@@ -131,7 +144,7 @@ export default function CartPage() {
                         
                         <div className="space-y-3 mb-6">
                             <div className="flex justify-between">
-                                <span>Items ({cartData.products.length})</span>
+                                <span>Items ({totalItemsCount})</span>
                                 <span>EGP {cartData.totalCartPrice.toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between">
@@ -145,13 +158,13 @@ export default function CartPage() {
                             </div>
                         </div>
                         
-                        <button className="w-full bg-black text-white py-3 rounded-full hover:bg-gray-800 transition font-semibold">
+                        <button className="w-full bg-black text-white py-3 rounded-full hover:bg-gray-800 transition font-semibold cursor-pointer">
                             Proceed to Checkout
                         </button>
                         
                         <Link 
                             href="/product"
-                            className="block text-center text-gray-600 hover:text-black transition mt-4"
+                            className="block text-center text-gray-600 hover:text-black transition mt-4 cursor-pointer"
                         >
                             Continue Shopping
                         </Link>
