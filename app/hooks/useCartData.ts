@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import { getCart } from '../../API/getCart';
 import { updateCartItem } from '../../API/updateCartItem';
 import { removeFromCart } from '../../API/removeFromCart';
+import { clearCart } from '../../API/clearCart';
 import { toast } from 'sonner';
 
 interface CartItem {
@@ -122,6 +123,30 @@ export function useCartData() {
         }
     };
 
+    const clearAllItems = async () => {
+        if (!session?.accessToken) {
+            setError('Please login first');
+            return false;
+        }
+
+        try {
+            const result = await clearCart(session.accessToken as string);
+            
+            if (result.message === 'success') {
+                setCartData(null);
+                toast.success('Cart cleared successfully');
+                return true;
+            } else {
+                toast.error('Failed to clear cart');
+                return false;
+            }
+        } catch (err) {
+            toast.error('Error clearing cart');
+            console.error('Cart clear error:', err);
+            return false;
+        }
+    };
+
     return {
         cartData,
         isLoading,
@@ -129,6 +154,7 @@ export function useCartData() {
         refetch: fetchCart,
         updateItemCount,
         removeItem,
+        clearAllItems,
         clearError: () => setError(null)
     };
 }
