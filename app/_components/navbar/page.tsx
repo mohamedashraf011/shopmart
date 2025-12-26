@@ -92,6 +92,16 @@ export default function Navbar() {
                       Change Password
                     </DropdownMenuItem>
 
+                    <DropdownMenuItem
+                      asChild
+                      className="cursor-pointer rounded-md hover:bg-gray-100 focus:bg-gray-100 transition-colors duration-150"
+                    >
+                      <Link href="/addresses">
+                        <i className="fa-solid fa-map-marker-alt mr-2"></i>
+                        My Addresses
+                      </Link>
+                    </DropdownMenuItem>
+
                     <DropdownMenuSeparator />
 
                     <DropdownMenuItem
