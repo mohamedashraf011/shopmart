@@ -43,6 +43,11 @@ export default function Navbar() {
               Categories
             </Link>
           </li>
+          <li>
+            <Link href="/analytics" className="text-xl nav-hover">
+              Analytics
+            </Link>
+          </li>
         </ul>
 
         <ul className="flex items-center gap-4">
