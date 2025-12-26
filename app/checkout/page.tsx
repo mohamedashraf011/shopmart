@@ -104,7 +104,6 @@ export default function CheckoutPage() {
                 
                 if (result.status === 'success') {
                     toast.success('Order placed successfully!');
-                    // Clear cart count immediately since order was placed
                     clearCartCount();
                     setTimeout(() => {
                         router.push('/orders');
@@ -149,7 +148,7 @@ export default function CheckoutPage() {
                         <div className="space-y-4 mb-6">
                             {cartData.products.map((item) => (
                                 <div key={item._id} className="flex items-center gap-4">
-                                    <div className="relative w-16 h-16 flex-shrink-0">
+                                    <div className="relative w-16 h-16 shrink-0">
                                         <Image
                                             src={item.product.imageCover}
                                             alt={item.product.title}
@@ -158,7 +157,7 @@ export default function CheckoutPage() {
                                         />
                                     </div>
                                     
-                                    <div className="flex-grow">
+                                    <div className="grow">
                                         <h3 className="font-semibold text-sm">
                                             {item.product.title}
                                         </h3>
