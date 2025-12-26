@@ -1,15 +1,34 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useOrders } from '../hooks/useOrders';
+import { useCartContext } from '../context/CartContext';
+import { toast } from 'sonner';
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function OrdersPage() {
     const { data: session } = useSession();
     const router = useRouter();
+    const searchParams = useSearchParams();
     const { orders, isLoading, error } = useOrders();
+    const { clearCartCount } = useCartContext();
+
+    // Check if coming from successful payment
+    useEffect(() => {
+        const fromPayment = searchParams.get('payment');
+        if (fromPayment === 'success') {
+            toast.success('Payment successful! Your order has been placed. 🎉');
+            clearCartCount(); // Clear cart count since payment was successful
+            
+            // Clean up URL
+            const url = new URL(window.location.href);
+            url.searchParams.delete('payment');
+            window.history.replaceState({}, '', url.toString());
+        }
+    }, [searchParams, clearCartCount]);
 
     if (!session) {
         return (

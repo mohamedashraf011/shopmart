@@ -114,7 +114,7 @@ export default function CheckoutPage() {
                 }
             } else {
                 const baseUrl = window.location.origin;
-                const successUrl = `${baseUrl}/payment/success`;
+                const successUrl = `${baseUrl}/orders?payment=success`;
                 const cancelUrl = `${baseUrl}/payment/cancel`;
                 
                 const result = await createOnlineOrder(cartData._id, shippingForm, session.accessToken as string, successUrl, cancelUrl);

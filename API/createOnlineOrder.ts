@@ -7,7 +7,7 @@ interface ShippingAddress {
 export async function createOnlineOrder(cartId: string, shippingAddress: ShippingAddress, token: string, successUrl?: string, cancelUrl?: string) {
     try {
         const baseUrl = window.location.origin;
-        const success = successUrl || `${baseUrl}/payment/success`;
+        const success = successUrl || `${baseUrl}/orders?payment=success`;
         const cancel = cancelUrl || `${baseUrl}/payment/cancel`;
         
         const url = `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${encodeURIComponent(success)}`;
