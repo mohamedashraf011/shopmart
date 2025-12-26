@@ -12,9 +12,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import ChangePassword from "@/app/_components/ChangePassword/ChangePassword";
+import { useCartContext } from "@/app/context/CartContext";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
+  const { cartItemsCount } = useCartContext();
   const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
 
   return (
@@ -49,7 +51,11 @@ export default function Navbar() {
               <li>
                 <Link href="/cart" className="relative nav-hover">
                   <i className="fa-solid fa-shopping-cart text-xl"></i>
-                  {/* يمكنك إضافة badge للعدد هنا لاحقاً */}
+                  {cartItemsCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-black text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                      {cartItemsCount > 99 ? '99+' : cartItemsCount}
+                    </span>
+                  )}
                 </Link>
               </li>
               <li>

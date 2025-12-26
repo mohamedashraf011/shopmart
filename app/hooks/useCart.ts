@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { addToCart } from '../../API/addToCart';
+import { useCartContext } from '../context/CartContext';
 import { toast } from 'sonner';
 
 export function useCart() {
     const { data: session } = useSession();
+    const { refreshCartCount } = useCartContext();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -22,6 +24,7 @@ export function useCart() {
             
             if (result.status === 'success') {
                 toast.success('Product added to cart successfully! 🛒');
+                refreshCartCount(); // Update cart count in navbar
                 return true;
             } else {
                 toast.error('Failed to add product to cart');

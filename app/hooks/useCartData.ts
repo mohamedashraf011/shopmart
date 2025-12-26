@@ -6,6 +6,7 @@ import { getCart } from '../../API/getCart';
 import { updateCartItem } from '../../API/updateCartItem';
 import { removeFromCart } from '../../API/removeFromCart';
 import { clearCart } from '../../API/clearCart';
+import { useCartContext } from '../context/CartContext';
 import { toast } from 'sonner';
 
 interface CartItem {
@@ -35,6 +36,7 @@ interface CartData {
 
 export function useCartData() {
     const { data: session } = useSession();
+    const { refreshCartCount } = useCartContext();
     const [cartData, setCartData] = useState<CartData | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -86,6 +88,7 @@ export function useCartData() {
             
             if (result.status === 'success') {
                 setCartData(result.data);
+                refreshCartCount(); // Update cart count in navbar
                 toast.success('Cart updated successfully');
                 return true;
             } else {
@@ -110,6 +113,7 @@ export function useCartData() {
             
             if (result.status === 'success') {
                 setCartData(result.data);
+                refreshCartCount(); // Update cart count in navbar
                 toast.success('Item removed from cart');
                 return true;
             } else {
@@ -134,6 +138,7 @@ export function useCartData() {
             
             if (result.message === 'success') {
                 setCartData(null);
+                refreshCartCount(); // Update cart count in navbar
                 toast.success('Cart cleared successfully');
                 return true;
             } else {
