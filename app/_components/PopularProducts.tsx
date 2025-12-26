@@ -60,7 +60,7 @@ export default function PopularProducts() {
                                     src={product.imageCover}
                                     alt={product.title}
                                     fill
-                                    className="object-cover rounded-md group-hover:scale-105 transition-transform duration-300"
+                                    className="object-contain rounded-md group-hover:scale-105 transition-transform duration-300"
                                 />
                             </div>
                             
