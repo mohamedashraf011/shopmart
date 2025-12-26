@@ -20,7 +20,7 @@ export default function CartPage() {
                     <p className="text-xl text-gray-600 mb-6">Please login to view your cart</p>
                     <button 
                         onClick={() => router.push('/login')}
-                        className="bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 transition"
+                        className="bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 transition cursor-pointer"
                     >
                         Login
                     </button>
@@ -167,9 +167,12 @@ export default function CartPage() {
                             </div>
                         </div>
                         
-                        <button className="w-full bg-black text-white py-3 rounded-full hover:bg-gray-800 transition font-semibold cursor-pointer">
+                        <Link 
+                            href="/checkout"
+                            className="w-full bg-black text-white py-3 rounded-full hover:bg-gray-800 transition font-semibold text-center block"
+                        >
                             Proceed to Checkout
-                        </button>
+                        </Link>
                         
                         <Link 
                             href="/product"

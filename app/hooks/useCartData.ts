@@ -36,7 +36,7 @@ interface CartData {
 
 export function useCartData() {
     const { data: session } = useSession();
-    const { refreshCartCount } = useCartContext();
+    const { refreshCartCount, clearCartCount } = useCartContext();
     const [cartData, setCartData] = useState<CartData | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -138,7 +138,7 @@ export function useCartData() {
             
             if (result.message === 'success') {
                 setCartData(null);
-                refreshCartCount(); // Update cart count in navbar
+                clearCartCount(); // Clear cart count immediately
                 toast.success('Cart cleared successfully');
                 return true;
             } else {

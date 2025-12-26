@@ -7,6 +7,7 @@ import { getCart } from '../../API/getCart';
 interface CartContextType {
     cartItemsCount: number;
     refreshCartCount: () => void;
+    clearCartCount: () => void;
     isLoading: boolean;
 }
 
@@ -46,6 +47,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         fetchCartCount();
     };
 
+    const clearCartCount = () => {
+        setCartItemsCount(0);
+    };
+
     useEffect(() => {
         if (session?.accessToken) {
             fetchCartCount();
@@ -55,7 +60,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }, [session?.accessToken]);
 
     return (
-        <CartContext.Provider value={{ cartItemsCount, refreshCartCount, isLoading }}>
+        <CartContext.Provider value={{ cartItemsCount, refreshCartCount, clearCartCount, isLoading }}>
             {children}
         </CartContext.Provider>
     );

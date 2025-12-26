@@ -59,6 +59,11 @@ export default function Navbar() {
                 </Link>
               </li>
               <li>
+                <Link href="/orders" className="nav-hover">
+                  <i className="fa-solid fa-box text-xl"></i>
+                </Link>
+              </li>
+              <li>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <button className="flex items-center gap-2 nav-hover cursor-pointer">
